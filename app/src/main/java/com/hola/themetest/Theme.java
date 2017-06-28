@@ -36,4 +36,5 @@ public class Theme {
     public int dockPadding;
     public int dockGap;
     public int folderGap;
+    public int indicatorSpacing;
 }

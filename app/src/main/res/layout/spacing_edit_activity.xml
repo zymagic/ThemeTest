@@ -68,5 +68,13 @@
             android:layout_height="wrap_content"
             android:hint="folder gap"
             android:inputType="number"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <EditText android:id="@+id/indicator_spacing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="indicator spacing"
+            android:inputType="number"/>
     </LinearLayout>
 </ScrollView>

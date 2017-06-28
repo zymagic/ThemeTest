@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 public class SpacingEditor extends ThemeEditor {
 
-    private EditText hPadding, hGap, vStartPadding, vEndPadding, textSpacing, dockPadding, dockGap, folderGap;
+    private EditText hPadding, hGap, vStartPadding, vEndPadding, textSpacing, dockPadding, dockGap, folderGap, indicatorSpacing;
 
     @Override
     protected int getLayoutId() {
@@ -43,6 +43,9 @@ public class SpacingEditor extends ThemeEditor {
         if (!TextUtils.isEmpty(folderGap.getText().toString())) {
             mTheme.folderGap = Integer.parseInt(folderGap.getText().toString());
         }
+        if (!TextUtils.isEmpty(indicatorSpacing.getText().toString())) {
+            mTheme.indicatorSpacing = Integer.parseInt(indicatorSpacing.getText().toString());
+        }
     }
 
     @Override
@@ -71,6 +74,9 @@ public class SpacingEditor extends ThemeEditor {
         if (mTheme.folderGap > 0) {
             folderGap.setText(Integer.toString(mTheme.folderGap));
         }
+        if (mTheme.indicatorSpacing > 0) {
+            indicatorSpacing.setText(Integer.toString(mTheme.indicatorSpacing));
+        }
     }
 
     @Override
@@ -83,5 +89,6 @@ public class SpacingEditor extends ThemeEditor {
         dockPadding = $(ret, R.id.dock_padding);
         dockGap = $(ret, R.id.dock_gap);
         folderGap = $(ret, R.id.folder_gap);
+        indicatorSpacing = $(ret, R.id.indicator_spacing);
     }
 }

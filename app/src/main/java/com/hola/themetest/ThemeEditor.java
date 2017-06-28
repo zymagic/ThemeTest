@@ -239,6 +239,10 @@ public abstract class ThemeEditor extends Fragment {
             dom.text(Integer.toString(mTheme.folderGap));
             dom.endTag(null, "folderGap");
 
+            dom.startTag(null, "indicatorSpacing");
+            dom.text(Integer.toString(mTheme.indicatorSpacing));
+            dom.endTag(null, "indicatorSpacing");
+
             dom.endTag(null, "spacing");
 
             dom.endTag(null, "launcher");

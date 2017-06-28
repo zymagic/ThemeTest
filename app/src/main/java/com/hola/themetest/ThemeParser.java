@@ -176,6 +176,8 @@ public class ThemeParser {
                         launcherPart.dockGap = Integer.parseInt(getTextContent(childNode));
                     } else if ("folderGap".equals(childNode.getNodeName())) {
                         launcherPart.folderGap = Integer.parseInt(getTextContent(childNode));
+                    } else if ("indicatorSpacing".equals(childNode.getNodeName())) {
+                        launcherPart.indicatorSpacing = Integer.parseInt(getTextContent(childNode));
                     }
                 }
             }
