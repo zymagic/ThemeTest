@@ -115,7 +115,7 @@ public class SortFactory {
 
         @Override
         public void sort(int[] a) {
-            mergeSort2(a, 0, a.length - 1, null);
+            mergeSort(a, 0, a.length - 1, null);
         }
 
         public static void mergeSort2(int[] a, int s, int e, int[] ra) {
@@ -147,6 +147,7 @@ public class SortFactory {
                 }
             }
             System.arraycopy(ra, 0, a, s, e - s + 1);
+            onSwap();
         }
 
         private void mergeSort(int[] a, int s, int e, int[] ra) {
@@ -167,11 +168,12 @@ public class SortFactory {
             mergeSort(a, ci + 1, e, ra);
 
             System.arraycopy(a, s, ra, 0, e - s + 1);
+            onSwap();
 
             int li = 0;
             int ri = ci + 1 - s;
             for (int i = s; i <= e; i++) {
-                if (gt(ri, e - s + 1) || se(li, ci - s) && st(ra[li], ra[ri])) {
+                if (gt(ri, e - s) || se(li, ci - s) && st(ra[li], ra[ri])) {
                     a[i] = ra[li];
                     li++;
                 } else {
@@ -308,6 +310,7 @@ public class SortFactory {
                 ii = bInsert(a, 0, i - 1, a[i]);
                 if (st(ii, i)) {
                     System.arraycopy(a, ii, a, ii + 1, i - ii);
+                    onSwap();
                     a[ii] = t;
                 }
             }
