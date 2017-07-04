@@ -57,14 +57,10 @@ public class SortFactory {
 
         @Override
         public void sort(int[] a) {
-            int t;
             for (int i = 0; i < a.length; i++) {
                 for (int j = 1; j < a.length - i; j++) {
-                    if (a[j - 1] > a[j]) {
-                        t = a[j - 1];
-                        a[j - 1] = a[j];
-                        a[j] = t;
-                        lag();
+                    if (gt(a[j - 1], a[j])) {
+                        swap(a, j - 1, j);
                     }
                 }
             }
@@ -78,11 +74,8 @@ public class SortFactory {
             int t;
             for (int i = 0; i < a.length; i++) {
                 for (int j = i; j < a.length; j++) {
-                    if (a[i] > a[j]) {
-                        t = a[i];
-                        a[i] = a[j];
-                        a[j] = t;
-                        lag();
+                    if (gt(a[i], a[j])) {
+                        swap(a, i, j);
                     }
                 }
             }
@@ -93,24 +86,20 @@ public class SortFactory {
 
         @Override
         public void sort(int[] a) {
-            int min, mi, t;
+            int min, mi;
             for (int i = 0; i < a.length; i++) {
                 min = a[i];
                 mi = i;
                 for (int j = i; j < a.length; j++) {
-                    if (a[j] < min) {
+                    if (st(a[j], min)) {
                         min = a[j];
                         mi = j;
                     }
-                    lag();
                 }
-                if (mi == i) {
+                if (eq(mi, i)) {
                     continue;
                 }
-                t = a[i];
-                a[i] = min;
-                a[mi] = t;
-                lag();
+                swap(a, i, mi);
             }
         }
     }
@@ -126,15 +115,12 @@ public class SortFactory {
             if (ra == null) {
                 ra = new int[e - s + 1];
             }
-            if (s >= e) {
+            if (ge(s, e)) {
                 return;
             }
-            if (e - s == 1) {
-                if (a[s] > a[e]) {
-                    int t = a[s];
-                    a[s] = a[e];
-                    a[e] = t;
-                    lag();
+            if (eq(e - s, 1)) {
+                if (gt(a[s], a[e])) {
+                    swap(a, s, e);
                 }
                 return;
             }
@@ -145,32 +131,27 @@ public class SortFactory {
             int li = s;
             int ri = ci + 1;
             for (int i = 0; i < e - s + 1; i++) {
-                if (ri > e || li <= ci && a[li] < a[ri]) {
+                if (gt(ri, e) || se(li, ci) && st(a[li], a[ri])) {
                     ra[i] = a[li];
                     li++;
                 } else {
                     ra[i] = a[ri];
                     ri++;
                 }
-                lag();
             }
             System.arraycopy(ra, 0, a, s, e - s + 1);
-            lag();
         }
 
         private void mergeSort(int[] a, int s, int e, int[] ra) {
             if (ra == null) {
                 ra = new int[e - s + 1];
             }
-            if (s >= e) {
+            if (ge(s, e)) {
                 return;
             }
-            if (e - s == 1) {
-                if (a[s] > a[e]) {
-                    int t = a[s];
-                    a[s] = a[e];
-                    a[e] = t;
-                    lag();
+            if (eq(e - s, 1)) {
+                if (gt(a[s], a[e])) {
+                    swap(a, s, e);
                 }
                 return;
             }
@@ -183,14 +164,13 @@ public class SortFactory {
             int li = 0;
             int ri = ci + 1 - s;
             for (int i = s; i <= e; i++) {
-                if (ri > e - s + 1 || li <= ci - s && ra[li] < ra[ri]) {
+                if (gt(ri, e - s + 1) || se(li, ci - s) && st(ra[li], ra[ri])) {
                     a[i] = ra[li];
                     li++;
                 } else {
                     a[i] = ra[ri];
                     ri++;
                 }
-                lag();
             }
         }
     }
@@ -202,14 +182,13 @@ public class SortFactory {
             int i, j, k, t;
             int n = a.length;
             k = n / 2;
-            while (k > 0) {
+            while (gt(k, 0)) {
                 for (i = k; i < n; i++) {
                     t = a[i];
                     j = i - k;
-                    while (j >= 0 && t < a[j]) {
+                    while (ge(j, 0) && st(t, a[j])) {
                         a[j + k] = a[j];
                         j = j - k;
-                        lag();
                     }
                     a[j + k] = t;
                 }
@@ -226,35 +205,33 @@ public class SortFactory {
         }
 
         private void quickSort(int[] a, int s, int e) {
-            if (s >= e) {
+            if (ge(s, e)) {
                 return;
             }
             int l = s;
             int r = e;
             int seed = a[s];
-            while (l < r) {
+            while (st(l, r)) {
                 for (;r > l; r--) {
-                    if (a[r] < seed) {
+                    if (st(a[r], seed)) {
                         a[l] = a[r];
                         ++l;
-                        lag();
                         break;
                     }
                 }
                 for (;l < r; l++) {
-                    if (a[l] >= seed) {
+                    if (ge(a[l], seed)) {
                         a[r] = a[l];
                         r--;
-                        lag();
                         break;
                     }
                 }
             }
             a[l] = seed;
-            if (s < l - 1) {
+            if (st(s, l - 1)) {
                 quickSort(a, s, l - 1);
             }
-            if (l + 1 < e) {
+            if (st(l + 1, e)) {
                 quickSort(a, l + 1, e);
             }
         }
@@ -268,14 +245,14 @@ public class SortFactory {
         }
 
         private void qsort(int[] a, int s, int e) {
-            if (s >= e) {
+            if (ge(s, e)) {
                 return;
             }
             int seedIndex = e;
             int seed = a[seedIndex];
             int temp, si;
             for (int i = s; i < seedIndex; ) {
-                if (a[i] > seed) {
+                if (gt(a[i], seed)) {
                     si = seedIndex - 1;
                     temp = a[si];
                     a[seedIndex] = a[i];
@@ -285,12 +262,11 @@ public class SortFactory {
                 } else {
                     i++;
                 }
-                lag();
             }
-            if (s < seedIndex - 1) {
+            if (st(s, seedIndex - 1)) {
                 qsort(a, s, seedIndex - 1);
             }
-            if (seedIndex + 1 < e) {
+            if (st(seedIndex + 1, e)) {
                 qsort(a, seedIndex + 1, e);
             }
         }
@@ -300,14 +276,10 @@ public class SortFactory {
 
         @Override
         public void sort(int[] a) {
-            int t;
             for (int i = 1; i < a.length; i++) {
                 for (int j = i; j > 0; j--) {
-                    if (a[j] < a[j - 1]) {
-                        t = a[j];
-                        a[j] = a[j - 1];
-                        a[j - 1] = t;
-                        lag();
+                    if (st(a[j], a[j - 1])) {
+                        swap(a, j, j - 1);
                     } else {
                         break;
                     }
@@ -323,28 +295,26 @@ public class SortFactory {
             int t, ii;
             for (int i = 1; i < a.length; i++) {
                 t = a[i];
-                if (t >= a[i - 1]) {
+                if (ge(t, a[i - 1])) {
                     continue;
                 }
                 ii = bInsert(a, 0, i - 1, a[i]);
-                if (ii < i) {
+                if (st(ii, i)) {
                     System.arraycopy(a, ii, a, ii + 1, i - ii);
                     a[ii] = t;
-                    lag();
                 }
             }
         }
 
         private int bInsert(int[] a, int s, int e, int v) {
-            if (s == e) {
-                lag();
-                if (v < a[e]) {
+            if (eq(s, e)) {
+                if (st(v, a[e])) {
                     return e;
                 }
                 return e + 1;
             }
             int ci = (s + e) / 2;
-            if (v < a[ci]) {
+            if (st(v, a[ci])) {
                 return bInsert(a, s, ci, v);
             } else {
                 return bInsert(a, ci + 1, e, v);
@@ -352,12 +322,51 @@ public class SortFactory {
         }
     }
 
-    private static void lag() {
+    private static void onCompare() {
         try {
-//            Thread.sleep(0, 500000);
-            Thread.sleep(5);
+            Thread.sleep(0, 50000);
         } catch (Exception e) {
             // ignore
         }
+    }
+
+    private static void onSwap() {
+        try {
+            Thread.sleep(0, 150000);
+        } catch (Exception e) {
+            // ignore
+        }
+    }
+
+    private static boolean gt(int a, int b) {
+        onCompare();
+        return a > b;
+    }
+
+    private static boolean ge(int a, int b) {
+        onCompare();
+        return a >= b;
+    }
+
+    private static boolean st(int a, int b) {
+        onCompare();
+        return a < b;
+    }
+
+    private static boolean se(int a, int b) {
+        onCompare();
+        return a <= b;
+    }
+
+    private static boolean eq(int a, int b) {
+        onCompare();
+        return a == b;
+    }
+
+    private static void swap(int[] a, int i, int j) {
+        a[i] ^= a[j];
+        a[j] ^= a[i];
+        a[i] ^= a[j];
+        onSwap();
     }
 }

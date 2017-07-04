@@ -17,7 +17,7 @@ public class SortTestActivity extends Activity {
         super.onCreate(savedInstanceState);
         View v = new View(this);
         setContentView(v);
-        int[] array = new int[100];
+        int[] array = new int[360];
         if (ai == 1) {
             SortFactory.sortArray(array);
         } else if (ai == 2) {
