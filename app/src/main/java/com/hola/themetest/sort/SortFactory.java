@@ -19,6 +19,8 @@ public class SortFactory {
             case 6: return new QuickSort();
             case 7: return new QuickSort2();
             case 8: return new MergeSort();
+            case 9: return new BucketSort();
+            case 10: return new StoogeSort();
         }
         return null;
     }
@@ -37,14 +39,19 @@ public class SortFactory {
     }
 
     public static void sortArray(int[] a) {
-        for (int i = 0; i < a.length; i++) {
-            a[i] = i + 1;
+        int step = a.length / 10;
+        if (step < 5) {
+            step = 5;
         }
-    	for (int i = 0; i < a.length - 1; i+=2) {
-    		int temp = a[i];
-    		a[i] = a[i + 1];
-    		a[i + 1] = temp;
-    	}
+        for (int i = 0; i < a.length; i++) {
+//            a[i] = i + 1;
+            a[i] = (i / step) * step +step - (i % step);
+        }
+//    	for (int i = 0; i < a.length - 1; i+=2) {
+//    		int temp = a[i];
+//    		a[i] = a[i + 1];
+//    		a[i + 1] = temp;
+//    	}
     }
 
     public static void reverseArray(int[] a) {
@@ -319,6 +326,56 @@ public class SortFactory {
             } else {
                 return bInsert(a, ci + 1, e, v);
             }
+        }
+    }
+
+    private static class BucketSort implements Sorter.Sort {
+
+        @Override
+        public void sort(int[] a) {
+            int max = a[0];
+            for (int i = 1; i < a.length; i++) {
+                if (st(max, a[i])) {
+                    max = a[i];
+                }
+            }
+            int[] bucket = new int[max + 1];
+            for (int i = 0; i < a.length; i++) {
+                bucket[a[i]] = a[i];
+            }
+            int j = 0;
+            for (int i = 0; i < bucket.length && j < a.length; i++) {
+                if (gt(bucket[i], 0)) {
+                    a[j] = bucket[i];
+                    j++;
+                }
+            }
+        }
+    }
+
+    private static class StoogeSort implements Sorter.Sort {
+
+        @Override
+        public void sort(int[] a) {
+            stoogeSort(a, 0, a.length - 1);
+        }
+
+        private void stoogeSort(int[] a, int s, int e) {
+            if (ge(s, e)) {
+                return;
+            }
+            if (gt(a[s], a[e])) {
+                int temp = a[s];
+                a[s] = a[e];
+                a[e] = temp;
+            }
+            if (ge(s + 1, e)) {
+                return;
+            }
+            int k = (e - s + 1) / 3;
+            stoogeSort(a, s, e - k);
+            stoogeSort(a, s + k, e);
+            stoogeSort(a, s, e - k);
         }
     }
 

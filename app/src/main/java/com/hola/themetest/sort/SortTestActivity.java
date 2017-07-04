@@ -26,7 +26,7 @@ public class SortTestActivity extends Activity {
             SortFactory.randomArray(array);
         }
         Sorter.Sort sort = SortFactory.getSort(id);
-        if (id == 8) {
+        if (id == 10) {
             id = 0;
             ai++;
             if (ai > 2) {
