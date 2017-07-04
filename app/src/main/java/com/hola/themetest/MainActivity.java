@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.hola.themetest.sort.SortTestActivity;
+
 public class MainActivity extends Activity {
 
     @Override
@@ -18,11 +20,16 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ListView lv = (ListView) findViewById(R.id.list);
         lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {
-                "spacing", "icon"
+                "Sort", "spacing", "icon"
         }));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    startActivity(new Intent(MainActivity.this, SortTestActivity.class));
+                    return;
+                }
+                position--;
                 String theme = getSharedPreferences("theme", Context.MODE_PRIVATE).getString("theme", "");
                 if (TextUtils.isEmpty(theme)) {
                     theme = ThemeGenerator.generateThemeName();

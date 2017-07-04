@@ -22,6 +22,9 @@
         </activity>
         <activity android:name=".ThemeEditActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar"/>
+
+        <activity android:name=".sort.SortTestActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar"/>
     </application>
 
 </manifest>
